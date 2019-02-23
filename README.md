@@ -1,5 +1,5 @@
 # Logic-Based-Sudoku-Solver
-Solves sudoku puzzles using only logic, no bruteforce. 
+Solves sudoku puzzles using only logic, no bruteforce. Also outputs step by step solution.
 
 *This project was orignally made during ~April 2018. Uploaded to github 2019-02-23*
 
