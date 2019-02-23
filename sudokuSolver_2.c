@@ -62,99 +62,6 @@ void solve_sudoku(int *cells, bool message){
 		free(candidates[i]);
 }
 
-int check_forced_collumns(int *cells, bool **candidates, bool **checkedCollumns){
-	for(int x = 0; x < 9; x++){
-		if(check_forced_collumn(cells, candidates, checkedCollumns, x))
-			return 1;
-	}
-	return 0;
-}
-
-int check_forced_collumn(int *cells, bool **candidates, bool **checkedCollumns, int collumn){
-	for(int y = 0; y < 9; y++){
-		if(cells[p2i(collumn,y)] != 0){
-			checkedCollumns[collumn][cells[p2i(collumn,y)]-1] = 1;
-		}
-	}
-
-	for(int n = 0; n < 9; n++){
-		if(checkedCollumns[collumn][n])
-			continue;
-		int must_yx = -1;
-		for(int yx = 0; yx < 3; yx++){
-			for(int y = 0; y < 3; y++){
-				if(candidates[p2i(collumn,yx*3+y)][n] == false){
-					if(must_yx != -1){
-						must_yx = -1;
-						yx = 3;
-						break;
-					}
-					must_yx = yx;
-				}
-			}
-		}
-		if(must_yx != -1){
-			update_collumn_box(cells, candidates, n+1, must_yx, collumn);
-			checkedCollumns[collumn][n] = true;
-			printf("collumn %d n = %d\n", collumn%3, n+1);
-			for(int x = (collumn/3)*3; x < (collumn/3)*3+3; x++){
-				for(int y = must_yx*3; y < must_yx*3+3; y++){
-					if(candidates[p2i(x,y)][n] && cells[p2i(x,y)] == 0)
-						printf(" ,");
-					else if (cells[p2i(x,y)] == 0)
-						printf("%d,",n+1);
-					else
-						printf("%d,",cells[p2i(x,y)]);
-				}
-				printf("\n");
-			}
-			return 1;
-		}
-	}
-	return 0;
-}
-
-int check_forced_rows(int *cells, bool **candidates, bool **checkedRows){
-	for(int y = 0; y < 9; y++){
-		if(check_forced_row(cells, candidates, checkedRows, y))
-			return 1;
-	}
-	return 0;
-}
-
-int check_forced_row(int *cells, bool **candidates, bool **checkedRows, int row){
-	for(int x = 0; x < 9; x++){
-		if(cells[p2i(x,row)] != 0){
-			checkedRows[row][cells[p2i(x,row)]-1] = 1;
-		}
-	}
-
-	for(int n = 0; n < 9; n++){
-		if(checkedRows[row][n])
-			continue;
-		int must_bx = -1;
-		for(int bx = 0; bx < 3; bx++){
-			for(int x = 0; x < 3; x++){
-				if(candidates[p2i(bx*3+x,row)][n] == false){
-					if(must_bx != -1){
-						must_bx = -1;
-						bx = 3;
-						break;
-					}
-					must_bx = bx;
-				}
-			}
-		}
-		if(must_bx != -1){
-			update_row_box(cells, candidates, n+1, must_bx, row);
-			checkedRows[row][n] = true;
-			printf("row\n");
-			return 1;
-		}
-	}
-	return 0;
-}
-
 int check_unique_boxes_pair_rows(int *cells, bool **candidates, bool **checkedPairs){
 	for(int y = 0; y < 3; y++){
 		for(int x = 0; x < 3; x++){
@@ -273,6 +180,99 @@ int check_unique_box_pair_collumns(int *cells, bool **candidates, bool **checked
 					}
 				}
 			}
+		}
+	}
+	return 0;
+}
+
+int check_forced_collumns(int *cells, bool **candidates, bool **checkedCollumns){
+	for(int x = 0; x < 9; x++){
+		if(check_forced_collumn(cells, candidates, checkedCollumns, x))
+			return 1;
+	}
+	return 0;
+}
+
+int check_forced_collumn(int *cells, bool **candidates, bool **checkedCollumns, int collumn){
+	for(int y = 0; y < 9; y++){
+		if(cells[p2i(collumn,y)] != 0){
+			checkedCollumns[collumn][cells[p2i(collumn,y)]-1] = 1;
+		}
+	}
+
+	for(int n = 0; n < 9; n++){
+		if(checkedCollumns[collumn][n])
+			continue;
+		int must_yx = -1;
+		for(int yx = 0; yx < 3; yx++){
+			for(int y = 0; y < 3; y++){
+				if(candidates[p2i(collumn,yx*3+y)][n] == false){
+					if(must_yx != -1){
+						must_yx = -1;
+						yx = 3;
+						break;
+					}
+					must_yx = yx;
+				}
+			}
+		}
+		if(must_yx != -1){
+			update_collumn_box(cells, candidates, n+1, must_yx, collumn);
+			checkedCollumns[collumn][n] = true;
+			printf("collumn %d n = %d\n", collumn%3, n+1);
+			for(int x = (collumn/3)*3; x < (collumn/3)*3+3; x++){
+				for(int y = must_yx*3; y < must_yx*3+3; y++){
+					if(candidates[p2i(x,y)][n] && cells[p2i(x,y)] == 0)
+						printf(" ,");
+					else if (cells[p2i(x,y)] == 0)
+						printf("%d,",n+1);
+					else
+						printf("%d,",cells[p2i(x,y)]);
+				}
+				printf("\n");
+			}
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int check_forced_rows(int *cells, bool **candidates, bool **checkedRows){
+	for(int y = 0; y < 9; y++){
+		if(check_forced_row(cells, candidates, checkedRows, y))
+			return 1;
+	}
+	return 0;
+}
+
+int check_forced_row(int *cells, bool **candidates, bool **checkedRows, int row){
+	for(int x = 0; x < 9; x++){
+		if(cells[p2i(x,row)] != 0){
+			checkedRows[row][cells[p2i(x,row)]-1] = 1;
+		}
+	}
+
+	for(int n = 0; n < 9; n++){
+		if(checkedRows[row][n])
+			continue;
+		int must_bx = -1;
+		for(int bx = 0; bx < 3; bx++){
+			for(int x = 0; x < 3; x++){
+				if(candidates[p2i(bx*3+x,row)][n] == false){
+					if(must_bx != -1){
+						must_bx = -1;
+						bx = 3;
+						break;
+					}
+					must_bx = bx;
+				}
+			}
+		}
+		if(must_bx != -1){
+			update_row_box(cells, candidates, n+1, must_bx, row);
+			checkedRows[row][n] = true;
+			printf("row\n");
+			return 1;
 		}
 	}
 	return 0;
