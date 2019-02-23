@@ -24,47 +24,28 @@ void solve_sudoku(int *cells, bool message){
 	bool *checkedCollumns[9] = {0};
 	for(int i = 0; i < 9; i++)
 		checkedCollumns[i] = calloc(9, sizeof(bool));
-	//bool checkedRows[9] = {0};
 
 	bool solved = false;
 	while(!solved){
-		while(check_single(cells, candidates)){}
+		if(check_single(cells, candidates)){continue;}
 
-		if(check_unique_rows(cells, candidates)){
-			continue;
-		}
+		if(check_unique_rows(cells, candidates)){continue;}
 
-		if(check_unique_collumns(cells, candidates)){
-			continue;
-		}
+		if(check_unique_collumns(cells, candidates)){continue;}
 
-		if(check_unique_boxes(cells, candidates)){
-			continue;
-		}
+		if(check_unique_boxes(cells, candidates)){continue;}
 
-		if(check_unique_boxes_rows(cells, candidates, checkedBoxNumbers)){
-			continue;
-		}
+		if(check_unique_boxes_rows(cells, candidates, checkedBoxNumbers)){continue;}
 
-		if(check_unique_boxes_collumns(cells, candidates, checkedBoxNumbers)){
-			continue;
-		}
+		if(check_unique_boxes_collumns(cells, candidates, checkedBoxNumbers)){continue;}
 
-		if(check_unique_boxes_pair_collumns(cells, candidates, checkedPairs)){
-			continue;
-		}
+		if(check_unique_boxes_pair_collumns(cells, candidates, checkedPairs)){continue;}
 
-		if(check_unique_boxes_pair_rows(cells, candidates, checkedPairs)){
-			continue;
-		}
+		if(check_unique_boxes_pair_rows(cells, candidates, checkedPairs)){continue;}
 
-		if(check_forced_rows(cells, candidates, checkedRows)){
-			continue;
-		}
+		if(check_forced_rows(cells, candidates, checkedRows)){continue;}
 
-		if(check_forced_collumns(cells, candidates, checkedCollumns)){
-			continue;
-		}
+		if(check_forced_collumns(cells, candidates, checkedCollumns)){continue;}
 
 		break;
 	}
