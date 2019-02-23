@@ -7,14 +7,17 @@ It does however solve most evil level puzzles i have tested.
 
 ## How to use
 *To compile*
+
 $ make
 
 *To solve a puzzle*
 
 From file
+
 $ ./SudokuSolver < puzzle_evil_2.txt
 
 or
 
 $ ./SudokuSolver
+
 $ 029000701000600500350010000810300000000070000000008049000040012002007000105000490
