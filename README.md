@@ -14,7 +14,7 @@ $ make
 
 From file
 
-$ ./SudokuSolver < puzzle_evil_2.txt
+$ ./SudokuSolver < puzzle_evil_2
 
 or
 
